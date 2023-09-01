@@ -11,7 +11,7 @@ class CreateFillableModel extends Command
      *
      * @var string
      */
-    protected $signature = 'app:model';
+    protected $signature = 'app:model {model}';
 
     /**
      * The console command description.
@@ -25,7 +25,8 @@ class CreateFillableModel extends Command
      */
     public function handle()
     {
-        $modelName = $this->ask('Enter model name');
+        $modelName = $this->argument('model');
+        // $modelName = $this->ask('Enter model name');
 
         $fillableValues = [];
         while (true) {

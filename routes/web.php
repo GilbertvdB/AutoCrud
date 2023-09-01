@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +22,6 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('bootstrap');
 });
+
+Route::resource('/tests', TestController::class);
+Route::resource('/posts', PostController::class);

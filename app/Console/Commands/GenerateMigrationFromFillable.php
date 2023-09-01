@@ -12,7 +12,7 @@ class GenerateMigrationFromFillable extends Command
      *
      * @var string
      */
-    protected $signature = 'app:migration';
+    protected $signature = 'app:migration {model}';
 
     /**
      * The console command description.
@@ -25,8 +25,9 @@ class GenerateMigrationFromFillable extends Command
      * Execute the console command.
      */
     public function handle()
-    {
-        $modelName = $this->ask('Enter model name');
+    {   
+        $modelName = $this->argument('model');
+        // $modelName = $this->ask('Enter model name');
 
         $modelClass = "App\\Models\\$modelName";
 
@@ -54,10 +55,12 @@ class GenerateMigrationFromFillable extends Command
         $columns = [];
         foreach ($fillableProperties as $property) {
             $type = $this->ask("Enter column type for '$property'");
-            $columns[] = "            \$table->{$type}('$property');";
+            // $columns[] = "            \$table->{$type}('$property');";
+            $columns[] = "\$table->{$type}('$property');";
         }
 
-        $columnsCode = implode(PHP_EOL, $columns);
+        // $columnsCode = implode(PHP_EOL, $columns);
+        $columnsCode = implode("\n            ", $columns);
   
         $stub = str_replace('{{columns}}', $columnsCode, $stub);
         $stub = str_replace('{{tableName}}', $tableName, $stub);

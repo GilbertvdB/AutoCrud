@@ -12,7 +12,7 @@ class CreateAll extends Command
      *
      * @var string
      */
-    protected $signature = 'app:create-all';
+    protected $signature = 'app:createAll';
 
     /**
      * The console command description.
@@ -26,13 +26,13 @@ class CreateAll extends Command
      */
     public function handle()
     {
-        $modelName = $this->ask('Enter model name');
-        $this->call('make:model', ['name' => $modelName]);
-        $this->call('make:migration', ['name' => 'create_' . Str::snake($modelName) . '_table']);
-
-        $controllerName = $modelName . 'Controller';
-        $this->call('make:controller', ['name' => $controllerName]);
-        $this->call('make:resource', ['name' => $modelName]);
+        $model = $this->ask('Enter model name');
+        $this->call('app:model', ['model' => $model]);
+        $this->call('app:migration', ['model' => $model]);
+        $this->call('app:repository', ['model' => $model]);
+        $this->call('app:storeRequest', ['model' => $model]);
+        $this->call('app:controller', ['model' => $model]);
+        $this->call('app:route', ['model' => $model]);
         
         // $this->call('make:view', ['name' => 'index']);
         // $this->call('make:view', ['name' => 'create']);

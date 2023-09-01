@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Store{{modelClass}}Request;
+use App\Models\{{modelClass}};
+use App\Repositories\{{modelClass}}Repository;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+
+class {{modelClass}}Controller extends Controller
+{
+    public function __construct({{modelClass}}Repository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    public function index(): View
+    {
+        ${{model}}s = $this->repository->getAllPaginated();
+
+        return view('{{model}}s.index', compact('{{model}}s'));
+    }
+
+    public function create(): View
+    {
+        ${{model}}s = {{modelClass}}::all();
+
+        return view('{{model}}s.create', compact('{{model}}s'));
+    }
+
+    public function store(Store{{modelClass}}Request $request): RedirectResponse
+    {   
+        $create = $request->except(['_token']);
+        ${{model}}s = $this->repository->create($create);
+
+        return redirect()->route('{{model}}s.index')->with('success', __('labels.added'));
+    }
+
+    public function edit({{modelClass}} ${{model}}): View
+    {
+
+        return view('{{model}}s.edit', compact('{{model}}'));
+    }
+
+    public function update(Request $request, {{modelClass}} ${{model}}): RedirectResponse
+    {
+        $update = array_filter($request->except(['_token', '_method']));
+        $this->repository->update(${{model}}->id, $update);
+
+        return redirect()->route('{{model}}s.edit', ${{model}}->id)->with('success', __('labels.updated'));
+    }
+
+    public function destroy({{modelClass}} ${{model}}): RedirectResponse
+    {
+        ${{model}}->delete();
+
+        return redirect()->route('{{model}}s.index')->with('error', __('labels.deleted'));
+    }
+
+}

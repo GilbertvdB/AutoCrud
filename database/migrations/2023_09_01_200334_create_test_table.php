@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
-                    $table->string('name_1');
-            $table->string('content_1');
-            $table->string('user_id');
+            $table->string('name_1');
+            $table->longText('content_1');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
