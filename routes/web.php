@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AllzController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\StuffController;
 
 
 /*
@@ -23,5 +25,11 @@ Route::get('/home', function () {
     return view('bootstrap');
 });
 
+Route::get('/index', function () {
+    return view('index');
+});
+
 Route::resource('/tests', TestController::class);
 Route::resource('/posts', PostController::class);
+Route::resource('/stuffs', StuffController::class);
+Route::resource('allzs', AllzController::class);

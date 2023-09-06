@@ -33,8 +33,12 @@ class CreateAll extends Command
         $this->call('app:storeRequest', ['model' => $model]);
         $this->call('app:controller', ['model' => $model]);
         $this->call('app:route', ['model' => $model]);
+        $this->call('app:routeController', ['model' => $model]);
+        $this->call('app:sidebarLink', ['model' => $model]);
+
+        $this->call('migrate');
         
-        // $this->call('make:view', ['name' => 'index']);
+        $this->call('app:index', ['model' => $model]);
         // $this->call('make:view', ['name' => 'create']);
         // $this->call('make:view', ['name' => 'edit']);
     }

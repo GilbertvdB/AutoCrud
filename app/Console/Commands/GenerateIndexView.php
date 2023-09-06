@@ -13,7 +13,7 @@ class GenerateIndexView extends Command
      *
      * @var string
      */
-    protected $signature = 'app:index';
+    protected $signature = 'app:index {model}';
 
     /**
      * The console command description.
@@ -27,8 +27,8 @@ class GenerateIndexView extends Command
      */
     public function handle()
     {
-        // $modelName = $this->argument('model');
-        $modelName = $this->ask('Enter model name');
+        $modelName = $this->argument('model');
+        // $modelName = $this->ask('Enter model name');
 
         // Verify if the model exists
         $modelClass = "App\\Models\\$modelName";
