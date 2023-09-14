@@ -14,16 +14,15 @@
 <table class="table table-striped">
     <thead>
         <tr class="table-dark">
-                        <th>{{ __('labels.Name') }}</th>
+            <th>{{ __('labels.Name') }}</th>
             <th>{{ __('labels.active') }}</th>
-
             <th width="350"></th>
         </tr>
     </thead>
     <tbody id="tbody">
         @forelse ($allzs as $allz)
         <tr>
-                        <td>{{ $allz->Name }}</td>
+            <td>{{ $allz->Name }}</td>
             <td>{{ $allz->active }}</td>
 
             <td align="right">@include('layouts.actions', ['route' => 'allzs', 'entity' => $allz])</td>

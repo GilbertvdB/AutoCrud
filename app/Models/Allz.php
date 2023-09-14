@@ -9,5 +9,5 @@ class Allz extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['Name', 'active'];
+    protected $fillable = ['name', 'active'];
 }

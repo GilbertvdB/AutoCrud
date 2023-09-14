@@ -1,0 +1,20 @@
+@extends('layouts.auth')
+
+@section('content')
+<div class="container">
+    <h1>Create {{model}}</h1>
+
+    <form method="POST" action="{{ route('{{model}}s.store') }}">
+        @csrf
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                <div class="card border p-3">
+                {{inputContents}}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+@endsection

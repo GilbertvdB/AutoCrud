@@ -38,7 +38,8 @@ class CreateAll extends Command
 
         $this->call('migrate');
         
-        $this->call('app:index', ['model' => $model]);
+        $this->call('updateLabels',['model' => $model]);
+        $this->call('app:viewIndex', ['model' => $model]);
         // $this->call('make:view', ['name' => 'create']);
         // $this->call('make:view', ['name' => 'edit']);
     }

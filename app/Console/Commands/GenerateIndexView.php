@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use File;
+use Illuminate\Support\Facades\File;
 
 class GenerateIndexView extends Command
 {
@@ -13,7 +13,7 @@ class GenerateIndexView extends Command
      *
      * @var string
      */
-    protected $signature = 'app:index {model}';
+    protected $signature = 'app:viewIndex {model}';
 
     /**
      * The console command description.
