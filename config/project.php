@@ -27,6 +27,18 @@ return array (
       'name' => 'Allzs',
       'link' => '/allzs',
     ),
+    4 => 
+    array (
+      'icon' => 'fa-solid fa-link fa-lg',
+      'name' => 'Pics',
+      'link' => '/pics',
+    ),
+    5 => 
+    array (
+      'icon' => 'fa-solid fa-link fa-lg',
+      'name' => 'Imgs',
+      'link' => '/imgs',
+    ),
   ),
   'footer' => 
   array (

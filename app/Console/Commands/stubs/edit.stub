@@ -4,8 +4,9 @@
 <div class="container">
     <h1>Create {{model}}</h1>
 
-    <form method="POST" action="{{ route('{{model}}s.store') }}">
+    <form method="POST" action="{{ route('{{model}}s.update'), {{model}} }}">
         @csrf
+        @method('PUT')
         <div class="row">
             <div class="col-12 col-lg-12">
                 <div class="card border p-3">
@@ -14,7 +15,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Create</button>
+        <button type="submit" class="btn btn-primary mt-3">Update</button>
     </form>
 </div>
 @endsection

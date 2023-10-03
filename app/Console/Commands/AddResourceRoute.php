@@ -45,7 +45,7 @@ class AddResourceRoute extends Command
 
     protected function addResourceRouteToWeb($route, $model)
     {
-        $routeContent = "Route::resource('$route', " . $model . "Controller::class);";
+        $routeContent = "Route::resource('/'.'$route', " . $model . "Controller::class);";
 
         // Determine the path to web.php
         $webPath = base_path('routes/web.php');

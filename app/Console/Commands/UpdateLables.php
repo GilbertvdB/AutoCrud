@@ -27,8 +27,7 @@ class UpdateLables extends Command
      */
     public function handle()
     {
-        // $model = $this->argument('model');
-        $model = $this->ask('Enter model name');
+        $model = $this->argument('model');
         // $model = $this->ask('Enter model name');
         $fillableProperties = $this->getFillableProperties($model);
 
