@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <h1>Create stuff</h1>
+    <h1>Create img</h1>
 
-    <form method="POST" action="{{ route('stuffs.store') }}">
+    <form method="POST" action="{{ route('imgs.store') }}">
         @csrf
         <div class="row">
             <div class="col-12 col-lg-12">
@@ -17,13 +17,8 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="job" class="@if ($errors->has('job')) text-danger @endif">{{ __('labels.job') }}</label>
-                        <input type="file" id="job" name="job" class="form-control @if ($errors->has('job')) is-invalid @endif" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="active" class="@if ($errors->has('active')) text-danger @endif">{{ __('labels.active') }}</label>
-                        <input type="number" id="active" name="active" class="form-control @if ($errors->has('active')) is-invalid @endif"
-                            placeholder="{{ __('labels.active') }}..." value="{{ old('active') }}" required>
+                        <label for="path" class="@if ($errors->has('path')) text-danger @endif">{{ __('labels.path') }}</label>
+                        <input type="file" id="path" name="path" class="form-control @if ($errors->has('path')) is-invalid @endif" required>
                     </div>
 
                     <div class="form-group mb-3">

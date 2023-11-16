@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImgController;
 use App\Http\Controllers\PicController;
 use App\Http\Controllers\AllzController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\StuffController;
 
@@ -37,3 +38,6 @@ Route::resource('/stuffs', StuffController::class);
 Route::resource('allzs', AllzController::class);
 Route::resource('pics', PicController::class);
 Route::resource('imgs', ImgController::class);
+
+Route::get('/form', [FormController::class, 'index'])->name('form.home');
+Route::post('/form/store', [FormController::class, 'store'])->name('form.store');

@@ -1,0 +1,20 @@
+.custom-footer {
+    background-color: #1d7b7d;
+    color: #fff;
+    padding: 8px 8px;
+}
+
+.custom-footer ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+}
+
+.custom-footer hr {
+    height: 2px; /* Adjust the height as needed */
+    margin: 10px auto; /* Center the <hr> horizontally */
+
+.custom-footer .input-group-text {
+    background-color: #0f966e;
+    color: #fff;
+    border: none;
+}
