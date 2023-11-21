@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreTestRequest;
+use App\Http\Requests\StoreTestRequest;
 use App\Models\Test;
 use App\Repositories\TestRepository;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
@@ -32,7 +31,7 @@ class TestController extends Controller
     }
 
     public function store(StoreTestRequest $request): RedirectResponse
-    {   
+    {
         $create = $request->except(['_token']);
         $tests = $this->repository->create($create);
 
@@ -59,5 +58,4 @@ class TestController extends Controller
 
         return redirect()->route('tests.index')->with('error', __('labels.deleted'));
     }
-
 }

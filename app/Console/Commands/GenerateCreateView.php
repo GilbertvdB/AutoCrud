@@ -33,7 +33,7 @@ class GenerateCreateView extends Command
         $inputTypes = $this->askForInputTypes($fillableProperties);
         $inputContents = $this->generateInputContents($fillableProperties, $inputTypes);
 
-        $viewPath = resource_path("views/". Str::plural(Str::lower($model))."/create.blade.php");
+        $viewPath = resource_path('views/'.Str::plural(Str::lower($model)).'/create.blade.php');
 
         $this->generateFormView($viewPath, Str::lower($model), $inputContents);
 
@@ -44,7 +44,7 @@ class GenerateCreateView extends Command
     {
         $modelClass = "App\\Models\\$model";
 
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             return [];
         }
 
@@ -56,7 +56,7 @@ class GenerateCreateView extends Command
         $inputTypes = [];
 
         foreach ($fillableProperties as $property) {
-            $inputType = $this->ask("Enter input type for $property (text/textarea/select/number/hidden/none/file/files)");
+            $inputType = $this->ask("CreateView: Enter input type for $property (text/textarea/select/number/hidden/none/file/files)");
             $inputTypes[$property] = $inputType;
         }
 
@@ -83,25 +83,31 @@ class GenerateCreateView extends Command
     protected function generateFormView($viewPath, $model, $inputContents)
     {
         $inputTypes = [];
+        $hasFile = false;
         foreach ($inputContents as $property => $inputContent) {
             // Determine the input type based on the input content
             if (strpos($inputContent, 'input type="file"') !== false) {
                 $inputTypes[$property] = 'file';
+                $hasFile = true;
             } elseif (strpos($inputContent, 'input type="image"') !== false) {
                 $inputTypes[$property] = 'image';
+                $hasFile = true;
             } else {
                 $inputTypes[$property] = 'text'; // Default input type
             }
         }
-        
+
         // Read the contents of the stub file
-        $stubContents = file_get_contents(__DIR__ . '/stubs/create.stub');
+        $stubContents = file_get_contents(__DIR__.'/stubs/create.stub');
 
         // dd($inputContents);
 
         // Replace placeholders in the stub with actual content
         $stubContents = str_replace('{{model}}', $model, $stubContents);
         $stubContents = str_replace('{{inputContents}}', implode(PHP_EOL, $inputContents), $stubContents);
+
+        // Add the @if($hasFile) condition to the stub
+        $stubContents = str_replace('{{hasFile}}', $hasFile ? "enctype='multipart/form-data'" : '', $stubContents);
 
         // Write the view content to the form.blade.php file
         File::put($viewPath, $stubContents);
@@ -163,12 +169,12 @@ class GenerateCreateView extends Command
 
                                     <div class="form-group mb-3">
                                         <label for="$property" class="@if (\$errors->has('$property')) text-danger @endif">{{ __('labels.$property') }}</label>
-                                        <input type="file" multiple id="$property" name="$property" class="form-control @if (\$errors->has('$property')) is-invalid @endif" required>
+                                        <input type="file" multiple id="$property" name="{$property}[]" class="form-control @if (\$errors->has('$property')) is-invalid @endif" required>
                                     </div>
                 HTML;
         } else {
-        // Generate the text input code (same as before)
-        return <<<HTML
+            // Generate the text input code (same as before)
+            return <<<HTML
 
                                 <div class="form-group mb-3">
                                     <label for="$property" class="@if (\$errors->has('$property')) text-danger @endif">{{ __('labels.$property') }}</label>
@@ -178,5 +184,4 @@ class GenerateCreateView extends Command
             HTML;
         }
     }
-
 }

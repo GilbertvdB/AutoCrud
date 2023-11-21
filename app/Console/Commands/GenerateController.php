@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use File;
+use Illuminate\Console\Command;
 
 class GenerateController extends Command
 {
@@ -31,27 +30,29 @@ class GenerateController extends Command
         // $modelName = $this->ask('Enter model name');
 
         $modelClass = "App\\Models\\$modelName";
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             $this->error("Model $modelClass not found.");
+
             return;
         }
 
-        $controllerName = $modelName . 'Controller';
+        $controllerName = $modelName.'Controller';
 
         $this->generateControllerFile($controllerName, $modelName);
     }
 
     protected function generateControllerFile($controllerName, $model)
     {
-        $stub = file_get_contents(__DIR__ . '/stubs/controller.stub');
+        $stub = file_get_contents(__DIR__.'/stubs/controller.stub');
 
         $stub = str_replace('{{modelClass}}', $model, $stub);
         $stub = str_replace('{{model}}', strtolower($model), $stub);
 
-        $controllerPath = app_path('Http/Controllers') . '/' . $controllerName . '.php';
+        $controllerPath = app_path('Http/Controllers').'/'.$controllerName.'.php';
 
         if (File::exists($controllerPath)) {
             $this->error("Controller file already exists: $controllerPath");
+
             return;
         }
 

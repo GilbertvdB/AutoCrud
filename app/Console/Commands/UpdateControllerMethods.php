@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 
 class UpdateControllerMethods extends Command
 {
@@ -31,22 +30,23 @@ class UpdateControllerMethods extends Command
         $controllerName = "{$model}Controller";
         $controllerPath = app_path("Http/Controllers/{$controllerName}.php");
 
-        if (!file_exists($controllerPath)) {
+        if (! file_exists($controllerPath)) {
             $this->error("Controller {$controllerName} does not exist.");
+
             return;
         }
 
         // Define the code to be added to the store and update methods
-        $storeCode = <<<PHP
-        if (\$request->image !== null) {
-            \$file = \$request->file('image');
-            \$filename = date('Y_m_d_His').'_'. \$file->getClientOriginalName();
-            \$path = \$file->storeAs('images', \$filename);
-            \$create['image'] = \$filename;
+        $storeCode = <<<'PHP'
+        if ($request->image !== null) {
+            $file = $request->file('image');
+            $filename = date('Y_m_d_His').'_'. $file->getClientOriginalName();
+            $path = $file->storeAs('images', $filename);
+            $create['image'] = $filename;
         }
         PHP;
 
-    $updateCode = <<<PHP
+        $updateCode = <<<PHP
 if (\$request->image !== null) {
     \$file = \$request->file('image');
     \$filename = date('Y_m_d_His').'_'. \$file->getClientOriginalName();
@@ -63,7 +63,7 @@ PHP;
         $updatedContents = preg_replace_callback(
             '/public function store[\s\S]*?\}/',
             function ($matches) use ($storeCode) {
-                return rtrim($matches[0], '}') . "\n\n" . $storeCode . "\n}";
+                return rtrim($matches[0], '}')."\n\n".$storeCode."\n}";
             },
             $controllerContents
         );
@@ -74,56 +74,56 @@ PHP;
         $this->info("Code added to the store and update methods of $model controller.");
     }
 
-//     public function handle()
-//     {
-//         $model = $this->argument('model');
-//         $controllerName = "{$model}Controller";
-//         $controllerPath = app_path("Http/Controllers/{$controllerName}.php");
+    //     public function handle()
+    //     {
+    //         $model = $this->argument('model');
+    //         $controllerName = "{$model}Controller";
+    //         $controllerPath = app_path("Http/Controllers/{$controllerName}.php");
 
-//         if (!file_exists($controllerPath)) {
-//             $this->error("Controller {$controllerName} does not exist.");
-//             return;
-//         }
+    //         if (!file_exists($controllerPath)) {
+    //             $this->error("Controller {$controllerName} does not exist.");
+    //             return;
+    //         }
 
-//         $controllerContents = file_get_contents($controllerPath);
+    //         $controllerContents = file_get_contents($controllerPath);
 
-//         // Add code to the store and update methods
-//         $updatedContents = $this->addCodeToMethods($controllerContents);
+    //         // Add code to the store and update methods
+    //         $updatedContents = $this->addCodeToMethods($controllerContents);
 
-//         // Write the updated contents back to the controller file
-//         file_put_contents($controllerPath, $updatedContents);
+    //         // Write the updated contents back to the controller file
+    //         file_put_contents($controllerPath, $updatedContents);
 
-//         $this->info("Code added to store and update methods in {$controllerName}.");
-//     }
+    //         $this->info("Code added to store and update methods in {$controllerName}.");
+    //     }
 
-// protected function addCodeToMethods($controllerContents)
-// {
-//     // Define the code to add to the store and update methods
-//     $codeToAdd = <<<PHP
-//     if (\$request->image !== null) {
-//         \$file = \$request->file('image');
-//         \$filename = date('Y_m_d_His').'_'. \$file->getClientOriginalName();
-//         \$path = \$file->storeAs('images', \$filename);
-//         \$create['image'] = \$filename;
-//     }
+    // protected function addCodeToMethods($controllerContents)
+    // {
+    //     // Define the code to add to the store and update methods
+    //     $codeToAdd = <<<PHP
+    //     if (\$request->image !== null) {
+    //         \$file = \$request->file('image');
+    //         \$filename = date('Y_m_d_His').'_'. \$file->getClientOriginalName();
+    //         \$path = \$file->storeAs('images', \$filename);
+    //         \$create['image'] = \$filename;
+    //     }
 
-//     // Search for the store and update methods and add the code
-//     $controllerContents = preg_replace_callback(
-//         '/public function store\([^)]*\) \{[^}]*\}/s',
-//         function ($matches) use ($codeToAdd) {
-//             return $matches[0] . "\n\n" . $codeToAdd;
-//         },
-//         $controllerContents
-//     );
- 
-//     $controllerContents = preg_replace_callback(
-//         '/public function update\([^)]*\) \{[^}]*\}/s',
-//         function ($matches) use ($codeToAdd) {
-//             return $matches[0] . "\n\n" . $codeToAdd;
-//         },
-//         $controllerContents
-//     );
- 
-//     return $controllerContents;
+    //     // Search for the store and update methods and add the code
+    //     $controllerContents = preg_replace_callback(
+    //         '/public function store\([^)]*\) \{[^}]*\}/s',
+    //         function ($matches) use ($codeToAdd) {
+    //             return $matches[0] . "\n\n" . $codeToAdd;
+    //         },
+    //         $controllerContents
+    //     );
+
+    //     $controllerContents = preg_replace_callback(
+    //         '/public function update\([^)]*\) \{[^}]*\}/s',
+    //         function ($matches) use ($codeToAdd) {
+    //             return $matches[0] . "\n\n" . $codeToAdd;
+    //         },
+    //         $controllerContents
+    //     );
+
+    //     return $controllerContents;
 
 }

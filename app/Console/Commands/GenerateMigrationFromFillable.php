@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class GenerateMigrationFromFillable extends Command
 {
@@ -25,21 +25,22 @@ class GenerateMigrationFromFillable extends Command
      * Execute the console command.
      */
     public function handle()
-    {   
+    {
         $modelName = $this->argument('model');
         // $modelName = $this->ask('Enter model name');
 
         $modelClass = "App\\Models\\$modelName";
 
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             $this->error("Model $modelClass not found.");
+
             return;
         }
 
         $fillableProperties = app($modelClass)->getFillable();
 
-        $migrationName = 'create_' . Str::snake($modelName) . '_table';
-        $migrationPath = database_path('migrations') . '/' . now()->format('Y_m_d_His') . '_' . $migrationName . '.php';
+        $migrationName = 'create_'.Str::snake($modelName).'_table';
+        $migrationPath = database_path('migrations').'/'.now()->format('Y_m_d_His').'_'.$migrationName.'.php';
 
         $this->generateMigrationFile($migrationPath, $fillableProperties, $modelName);
 
@@ -61,7 +62,7 @@ class GenerateMigrationFromFillable extends Command
 
         // $columnsCode = implode(PHP_EOL, $columns);
         $columnsCode = implode("\n            ", $columns);
-  
+
         $stub = str_replace('{{columns}}', $columnsCode, $stub);
         $stub = str_replace('{{tableName}}', $tableName, $stub);
 

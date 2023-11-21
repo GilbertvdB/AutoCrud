@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container">
-    <h1>Create {{model}}</h1>
+    <h1>Create extra</h1>
 
-    <form method="POST" action="{{ route('{{model}}s.store') }}" {{hasFile}}>
+    <form method="POST" action="{{ route('extras.store') }}" >
         @csrf
         <div class="row">
             <div class="col-12 col-lg-12">
                 <div class="card border p-3">
-                {{inputContents}}
+                
                 </div>
             </div>
         </div>

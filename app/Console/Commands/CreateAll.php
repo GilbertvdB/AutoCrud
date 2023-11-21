@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 
 class CreateAll extends Command
@@ -37,7 +36,7 @@ class CreateAll extends Command
         $this->call('app:sidebarLink', ['model' => $model]);
 
         $this->call('migrate');
-        
+
         $this->call('app:updateLables', ['model' => $model]);
         $this->call('app:viewIndex', ['model' => $model]);
         $this->call('app:viewCreate', ['model' => $model]);

@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use File;
+use Illuminate\Console\Command;
 
 class GenerateRepository extends Command
 {
@@ -32,12 +31,13 @@ class GenerateRepository extends Command
 
         // Verify if the model exists
         $modelClass = "App\\Models\\$modelName";
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             $this->error("Model $modelClass not found.");
+
             return;
         }
 
-        $repositoryName = $modelName . 'Repository';
+        $repositoryName = $modelName.'Repository';
 
         $this->generateRepositoryFile($repositoryName, $modelName);
     }
@@ -45,17 +45,18 @@ class GenerateRepository extends Command
     protected function generateRepositoryFile($repositoryName, $model)
     {
         // Get the stub contents
-        $stub = file_get_contents(__DIR__ . '/stubs/repository.stub'); // Replace with actual path to your repository stub
+        $stub = file_get_contents(__DIR__.'/stubs/repository.stub'); // Replace with actual path to your repository stub
 
         // Replace the {{ $model }} placeholder with the provided model name
         $stub = str_replace('{{model}}', $model, $stub);
 
         // Determine the path where the repository file should be created
-        $repositoryPath = app_path('Repositories') . '/' . $repositoryName . '.php';
+        $repositoryPath = app_path('Repositories').'/'.$repositoryName.'.php';
 
         // Check if the repository file already exists
         if (File::exists($repositoryPath)) {
             $this->error("Repository file already exists: $repositoryPath");
+
             return;
         }
 

@@ -37,7 +37,7 @@ class CreateFillableModel extends Command
             $fillableValues[] = $value;
         }
 
-        $fillableProperties = "['" . implode("', '", $fillableValues) . "']";
+        $fillableProperties = "['".implode("', '", $fillableValues)."']";
 
         $this->call('make:model', ['name' => $modelName]);
 
@@ -54,19 +54,18 @@ class CreateFillableModel extends Command
         $modelContents = file_get_contents($modelPath);
 
         // Generate the fillable properties code
-        $fillablePropertiesCode = 'protected $fillable = [' . implode(', ', array_map(function ($value) {
+        $fillablePropertiesCode = 'protected $fillable = ['.implode(', ', array_map(function ($value) {
             return "'$value'";
-        }, $fillableValues)) . '];';
+        }, $fillableValues)).'];';
 
         // Insert the fillable properties code inside the class
-        $classOpening = 'class ' . $modelName . ' extends';
+        $classOpening = 'class '.$modelName.' extends';
         $updatedModelContents = str_replace(
             "use HasFactory;\n}",
-            "use HasFactory;\n\n    " . $fillablePropertiesCode . "\n}",
+            "use HasFactory;\n\n    ".$fillablePropertiesCode."\n}",
             $modelContents
         );
 
         file_put_contents($modelPath, $updatedModelContents);
     }
-
 }

@@ -26,7 +26,7 @@ class AddControllerToRoute extends Command
     {
         $model = $this->argument('model');
         // $model = $this->ask('Enter model name');
-        $controllerName = $model . 'Controller';
+        $controllerName = $model.'Controller';
 
         // Determine the path to web.php
         $webPath = base_path('routes/web.php');
@@ -36,6 +36,7 @@ class AddControllerToRoute extends Command
         $webContents = File::get($webPath);
         if (Str::contains($webContents, $useStatement)) {
             $this->error("Controller use statement for '$controllerName' already exists in web.php.");
+
             return;
         }
 

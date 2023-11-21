@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use File;
+use Illuminate\Console\Command;
 
 class GenerateStoreRequest extends Command
 {
@@ -30,30 +30,32 @@ class GenerateStoreRequest extends Command
         // $modelName = $this->ask('Enter model name');
 
         $modelClass = "App\\Models\\$modelName";
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             $this->error("Model $modelClass not found.");
+
             return;
         }
 
-        $requestName = 'Store' . $modelName . 'Request';
+        $requestName = 'Store'.$modelName.'Request';
 
         $this->generateStoreRequestFile($requestName, $modelName);
     }
 
     protected function generateStoreRequestFile($requestName, $model)
     {
-        $stub = file_get_contents(__DIR__ . '/stubs/storerequest.stub');
-        
+        $stub = file_get_contents(__DIR__.'/stubs/storerequest.stub');
+
         $fillableProperties = app("App\\Models\\$model")->getFillable();
         $rules = $this->generateValidationRules($fillableProperties);
 
         $stub = str_replace('{{model}}', $model, $stub);
         $stub = str_replace('{{rules}}', implode("\n            ", $rules), $stub);
 
-        $requestPath = app_path('Http/Requests') . '/' . $requestName . '.php';
+        $requestPath = app_path('Http/Requests').'/'.$requestName.'.php';
 
         if (File::exists($requestPath)) {
             $this->error("Store request file already exists: $requestPath");
+
             return;
         }
 
@@ -68,6 +70,7 @@ class GenerateStoreRequest extends Command
         foreach ($fillableProperties as $property) {
             $rules[] = "'$property' => 'required|max:255',";
         }
+
         return $rules;
     }
 }

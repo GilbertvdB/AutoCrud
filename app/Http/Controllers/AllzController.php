@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAllzRequest;
 use App\Models\Allz;
 use App\Repositories\AllzRepository;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class AllzController extends Controller
 {
@@ -32,7 +31,7 @@ class AllzController extends Controller
     }
 
     public function store(StoreAllzRequest $request): RedirectResponse
-    {   
+    {
         $create = $request->except(['_token']);
         $allzs = $this->repository->create($create);
 
@@ -59,5 +58,4 @@ class AllzController extends Controller
 
         return redirect()->route('allzs.index')->with('error', __('labels.deleted'));
     }
-
 }

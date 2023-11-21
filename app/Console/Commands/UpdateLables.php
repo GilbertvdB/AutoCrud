@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
 class UpdateLables extends Command
@@ -33,6 +32,7 @@ class UpdateLables extends Command
 
         if (empty($fillableProperties)) {
             $this->error("Model $model does not have fillable properties.");
+
             return;
         }
 
@@ -49,7 +49,7 @@ class UpdateLables extends Command
     {
         $modelClass = "App\\Models\\$model";
 
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             return [];
         }
 
@@ -64,13 +64,13 @@ class UpdateLables extends Command
         // Update the labels array with fillable properties if they don't already exist
         foreach ($fillableProperties as $property) {
             $property = strtolower($property);
-            if (!isset($labelsArray[$property])) {
+            if (! isset($labelsArray[$property])) {
                 $labelsArray[$property] = ucwords(str_replace('_', ' ', $property));
             }
         }
 
         // Convert the updated array back to PHP code
-        $updatedLabels = "<?php\n\nreturn " . var_export($labelsArray, true) . ';';
+        $updatedLabels = "<?php\n\nreturn ".var_export($labelsArray, true).';';
 
         return $updatedLabels;
     }

@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use File;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use File;
 
 class AddResourceRoute extends Command
 {
@@ -32,8 +32,9 @@ class AddResourceRoute extends Command
 
         // Verify if the model exists
         $modelClass = "App\\Models\\$modelName";
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             $this->error("Model $modelClass not found.");
+
             return;
         }
 
@@ -45,7 +46,7 @@ class AddResourceRoute extends Command
 
     protected function addResourceRouteToWeb($route, $model)
     {
-        $routeContent = "Route::resource('/'.'$route', " . $model . "Controller::class);";
+        $routeContent = "Route::resource('/'.'$route', ".$model.'Controller::class);';
 
         // Determine the path to web.php
         $webPath = base_path('routes/web.php');
@@ -55,11 +56,12 @@ class AddResourceRoute extends Command
         $webContents = File::get($webPath);
         if (Str::contains($webContents, $existingRoute)) {
             $this->error("Resource route for '$route' already exists in web.php.");
+
             return;
         }
 
         // Append the route to web.php
-        File::append($webPath, PHP_EOL . $routeContent);
+        File::append($webPath, PHP_EOL.$routeContent);
 
         $this->info("Resource route added to web.php for '$route'.");
     }

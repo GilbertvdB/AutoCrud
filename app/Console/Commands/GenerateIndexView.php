@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class GenerateIndexView extends Command
 {
@@ -32,22 +32,23 @@ class GenerateIndexView extends Command
 
         // Verify if the model exists
         $modelClass = "App\\Models\\$modelName";
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             $this->error("Model $modelClass not found.");
+
             return;
         }
 
         $fillableProperties = app($modelClass)->getFillable();
 
         // Create a directory with the model's name
-        $directoryPath = resource_path('views/' . Str::kebab(Str::plural($modelName)));
-        
-        if (!File::exists($directoryPath)) {
+        $directoryPath = resource_path('views/'.Str::kebab(Str::plural($modelName)));
+
+        if (! File::exists($directoryPath)) {
             File::makeDirectory($directoryPath, 0755, true); // Recursive directory creation
         }
 
         // Read the contents of the stub file
-        $stubContent = file_get_contents(__DIR__ . '/stubs/index.stub');
+        $stubContent = file_get_contents(__DIR__.'/stubs/index.stub');
 
         // Replace placeholders in the stub content
         $viewContent = str_replace(
@@ -57,7 +58,7 @@ class GenerateIndexView extends Command
         );
 
         // Determine the path for the view file
-        $viewPath = $directoryPath . '/index.blade.php';
+        $viewPath = $directoryPath.'/index.blade.php';
 
         // Write the view content to the file
         File::put($viewPath, $viewContent);
@@ -69,9 +70,10 @@ class GenerateIndexView extends Command
     {
         $th = '';
         foreach ($fillableProperties as $property) {
-            $label = __('labels.' . $property);
+            $label = __('labels.'.$property);
             $th .= "            <th>{{ __('$label') }}</th>\n";
         }
+
         return $th;
     }
 
@@ -81,6 +83,7 @@ class GenerateIndexView extends Command
         foreach ($fillableProperties as $property) {
             $td .= "            <td>{{ \${$model}->{$property} }}</td>\n";
         }
+
         return $td;
     }
 }

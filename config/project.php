@@ -12,32 +12,20 @@ return array (
     1 => 
     array (
       'icon' => 'fa-solid fa-link fa-lg',
-      'name' => 'Posts',
-      'link' => '/posts',
+      'name' => 'Tests',
+      'link' => '/tests',
     ),
     2 => 
     array (
       'icon' => 'fa-solid fa-link fa-lg',
-      'name' => 'Stuffs',
-      'link' => '/stuffs',
+      'name' => 'Test2s',
+      'link' => '/test2s',
     ),
     3 => 
     array (
       'icon' => 'fa-solid fa-link fa-lg',
-      'name' => 'Allzs',
-      'link' => '/allzs',
-    ),
-    4 => 
-    array (
-      'icon' => 'fa-solid fa-link fa-lg',
-      'name' => 'Pics',
-      'link' => '/pics',
-    ),
-    5 => 
-    array (
-      'icon' => 'fa-solid fa-link fa-lg',
-      'name' => 'Imgs',
-      'link' => '/imgs',
+      'name' => 'Contests',
+      'link' => '/contests',
     ),
   ),
   'footer' => 

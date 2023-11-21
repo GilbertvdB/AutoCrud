@@ -30,16 +30,16 @@ class AddSidebarLink extends Command
     {
         $model = $this->argument('model');
         // $model = $this->ask('Enter model name');
-        $link = '/' . Str::lower($model).'s';
+        $link = '/'.Str::lower($model).'s';
         $icon = 'fa-solid fa-link fa-lg'; // Default icon
         $name = Str::studly($model); // Default name
 
         // Load the config file
         $configPath = config_path('project.php');
         $configArray = config('project');
-        
+
         // Ensure the 'sidebar' key exists in the config array
-        if (!isset($configArray['sidebar'])) {
+        if (! isset($configArray['sidebar'])) {
             $configArray['sidebar'] = [];
         }
         // // Decode the JSON configuration
@@ -58,7 +58,7 @@ class AddSidebarLink extends Command
         config(['project' => $configArray]);
 
         // Convert the configuration array to PHP code with the opening PHP tag
-        $updatedConfig = "<?php\n\nreturn " . var_export($configArray, true) . ';';
+        $updatedConfig = "<?php\n\nreturn ".var_export($configArray, true).';';
         File::put($configPath, $updatedConfig);
 
         $this->info("Sidebar link added for model: $model");

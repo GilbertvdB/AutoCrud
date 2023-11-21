@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Create {{model}}</h1>
 
-    <form method="POST" action="{{ route('{{model}}s.update'), {{model}} }}">
+    <form method="POST" action="{{ route('{{model}}s.update'), {{model}} }}" {{hasFile}}>
         @csrf
         @method('PUT')
         <div class="row">

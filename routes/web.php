@@ -1,13 +1,10 @@
 <?php
 
+use App\Http\Controllers\ExtraController;
+use App\Http\Controllers\ContestController;
+use App\Http\Controllers\Test2Controller;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ImgController;
-use App\Http\Controllers\PicController;
-use App\Http\Controllers\AllzController;
-use App\Http\Controllers\FormController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\StuffController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +32,12 @@ Route::get('/index', function () {
 Route::resource('/tests', TestController::class);
 Route::resource('/posts', PostController::class);
 Route::resource('/stuffs', StuffController::class);
-Route::resource('allzs', AllzController::class);
-Route::resource('pics', PicController::class);
-Route::resource('imgs', ImgController::class);
 
 Route::get('/form', [FormController::class, 'index'])->name('form.home');
 Route::post('/form/store', [FormController::class, 'store'])->name('form.store');
+
+Route::resource('/'.'extras', ExtraController::class);
+Route::resource('/'.'tests', TestController::class);
+
+Route::resource('/'.'test2s', Test2Controller::class);
+Route::resource('/'.'contests', ContestController::class);

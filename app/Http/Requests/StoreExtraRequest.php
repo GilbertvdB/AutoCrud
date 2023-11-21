@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class StoreTestRequest extends Request
+class StoreExtraRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class StoreTestRequest extends Request
     public function rules()
     {
         return [
-            'names' => 'required|max:255',
+
         ];
     }
 }

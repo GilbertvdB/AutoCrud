@@ -2,19 +2,20 @@
 
 @section('content')
 <div class="container">
-    <h1>Create {{model}}</h1>
+    <h1>Create extra</h1>
 
-    <form method="POST" action="{{ route('{{model}}s.store') }}" {{hasFile}}>
+    <form method="POST" action="{{ route('extras.update'), extra }}" >
         @csrf
+        @method('PUT')
         <div class="row">
             <div class="col-12 col-lg-12">
                 <div class="card border p-3">
-                {{inputContents}}
+                
                 </div>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Create</button>
+        <button type="submit" class="btn btn-primary mt-3">Update</button>
     </form>
 </div>
 @endsection
