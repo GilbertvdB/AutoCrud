@@ -33,5 +33,6 @@
         @endforelse
     </tbody>
 </table>
+{{-- pagination --}}
 {!! $tests->links() !!}
 @stop
